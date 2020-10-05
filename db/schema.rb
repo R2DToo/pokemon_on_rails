@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_014850) do
+ActiveRecord::Schema.define(version: 2020_10_05_191125) do
 
   create_table "generations", force: :cascade do |t|
     t.string "name"
@@ -23,6 +23,10 @@ ActiveRecord::Schema.define(version: 2020_10_03_014850) do
     t.integer "pokedexnumber"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "pokemon_species_id", null: false
+    t.integer "pokedexes_id", null: false
+    t.index ["pokedexes_id"], name: "index_pokedex_entries_on_pokedexes_id"
+    t.index ["pokemon_species_id"], name: "index_pokedex_entries_on_pokemon_species_id"
   end
 
   create_table "pokedexes", force: :cascade do |t|
@@ -35,11 +39,17 @@ ActiveRecord::Schema.define(version: 2020_10_03_014850) do
   create_table "pokemon_species", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "generations_id", null: false
+    t.index ["generations_id"], name: "index_pokemon_species_on_generations_id"
   end
 
   create_table "pokemon_types", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "pokemons_id", null: false
+    t.integer "types_id", null: false
+    t.index ["pokemons_id"], name: "index_pokemon_types_on_pokemons_id"
+    t.index ["types_id"], name: "index_pokemon_types_on_types_id"
   end
 
   create_table "pokemons", force: :cascade do |t|
@@ -48,6 +58,8 @@ ActiveRecord::Schema.define(version: 2020_10_03_014850) do
     t.decimal "weight"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "pokemon_species_id", null: false
+    t.index ["pokemon_species_id"], name: "index_pokemons_on_pokemon_species_id"
   end
 
   create_table "types", force: :cascade do |t|
@@ -56,4 +68,10 @@ ActiveRecord::Schema.define(version: 2020_10_03_014850) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "pokedex_entries", "pokedexes", column: "pokedexes_id"
+  add_foreign_key "pokedex_entries", "pokemon_species", column: "pokemon_species_id"
+  add_foreign_key "pokemon_species", "generations", column: "generations_id"
+  add_foreign_key "pokemon_types", "pokemons", column: "pokemons_id"
+  add_foreign_key "pokemon_types", "types", column: "types_id"
+  add_foreign_key "pokemons", "pokemon_species", column: "pokemon_species_id"
 end
