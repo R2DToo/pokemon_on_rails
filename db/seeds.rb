@@ -5,13 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first
+PokemonType.delete_all
 Pokemon.delete_all
+PokedexEntry.delete_all
 PokemonSpecy.delete_all
 Generation.delete_all
 Pokedex.delete_all
-PokedexEntry.delete_all
 Type.delete_all
-PokemonType.delete_all
 
 all_generations = PokeApi.get(:generation)
 
@@ -39,4 +39,15 @@ total_pages.times do
     puts "ID: #{new_pokemon.id} Name: #{new_pokemon.name} Height: #{new_pokemon.height} Weight: #{new_pokemon.weight} SpeciesID: #{new_pokemon.pokemon_specy_id}"
   end
   offset += 20
+end
+all_types = PokeApi.get(:type)
+
+all_types.results.each do |type|
+  type_id = type.url[31..-2]
+  new_type = Type.create(id: type_id, name: type.name)
+  pokemon_in_type = PokeApi.get(type: type_id)
+  pokemon_in_type.pokemon.each do |pokemon|
+    pokemon_id = pokemon.pokemon.url[34..-2]
+    new_pokemon_type = new_type.pokemon_types.create(pokemon_id: pokemon_id)
+  end
 end
