@@ -27,7 +27,7 @@ end
 all_pokemon = PokeApi.get(:pokemon)
 
 offset = 0
-page_item_limit = 20
+page_item_limit = 50
 total_pages = all_pokemon.count / page_item_limit
 
 total_pages.times do
@@ -36,11 +36,11 @@ total_pages.times do
     pokemon_id = basic_pokemon.url[34..-2]
     api_pokemon = PokeApi.get(pokemon: pokemon_id)
     new_pokemon = Pokemon.create(id: api_pokemon.id, name: api_pokemon.name, height: api_pokemon.height, weight: api_pokemon.weight, pokemon_specy_id: api_pokemon.species.url[42..-2])
-    puts "ID: #{new_pokemon.id} Name: #{new_pokemon.name} Height: #{new_pokemon.height} Weight: #{new_pokemon.weight} SpeciesID: #{new_pokemon.pokemon_specy_id}"
   end
-  offset += 20
+  offset += 50
 end
 all_types = PokeApi.get(:type)
+pokemon_type_id = 0
 
 all_types.results.each do |type|
   type_id = type.url[31..-2]
@@ -48,6 +48,21 @@ all_types.results.each do |type|
   pokemon_in_type = PokeApi.get(type: type_id)
   pokemon_in_type.pokemon.each do |pokemon|
     pokemon_id = pokemon.pokemon.url[34..-2]
-    new_pokemon_type = new_type.pokemon_types.create(pokemon_id: pokemon_id)
+    pokemon_type_id += 1
+    new_pokemon_type = new_type.pokemon_types.create(id: pokemon_type_id, pokemon_id: pokemon_id)
+
+    next if new_pokemon_type.valid?
+
+    new_pokemon_type.errors.messages.each do |column, errors| # Keys of the hash are columns. Values are arrays of the errors
+      errors.each do |error|
+        puts "The #{column} #{error}."
+      end
+    end
   end
 end
+
+puts "Created #{Generation.count} Generations"
+puts "Created #{PokemonSpecy.count} Pokemon Species"
+puts "Created #{Pokemon.count} Pokemon"
+puts "Created #{Type.count} Types"
+puts "Created #{PokemonType.count} Pokemon Types"
