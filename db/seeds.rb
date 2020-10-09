@@ -12,7 +12,6 @@ PokemonSpecy.delete_all
 Generation.delete_all
 Pokedex.delete_all
 Type.delete_all
-
 all_generations = PokeApi.get(:generation)
 
 all_generations.count.times do |i|
@@ -50,15 +49,25 @@ all_types.results.each do |type|
     pokemon_id = pokemon.pokemon.url[34..-2]
     pokemon_type_id += 1
     new_pokemon_type = new_type.pokemon_types.create(id: pokemon_type_id, pokemon_id: pokemon_id)
+  end
+end
+all_pokedexes = PokeApi.get(:pokedex)
 
-    next if new_pokemon_type.valid?
+offset = 0
+page_item_limit = 8
+total_pages = all_pokedexes.count / page_item_limit
 
-    new_pokemon_type.errors.messages.each do |column, errors| # Keys of the hash are columns. Values are arrays of the errors
-      errors.each do |error|
-        puts "The #{column} #{error}."
-      end
+total_pages.times do
+  pokedex_page = PokeApi.get(pokedex: { limit: page_item_limit, offset: offset })
+  pokedex_page.results.each do |pokedex|
+    pokedex_id = pokedex.url[34..-2]
+    api_pokedex = PokeApi.get(pokedex: pokedex_id)
+    new_pokedex = Pokedex.create(id: api_pokedex.id, name: api_pokedex.name, region: api_pokedex.region)
+    api_pokedex.pokemon_entries.each do |entry|
+      new_pokedex_entry = new_pokedex.pokedex_entries.create(pokedexnumber: entry.entry_number, pokemon_specy_id: entry.pokemon_species.url[42..-2])
     end
   end
+  offset += 8
 end
 
 puts "Created #{Generation.count} Generations"
@@ -66,3 +75,5 @@ puts "Created #{PokemonSpecy.count} Pokemon Species"
 puts "Created #{Pokemon.count} Pokemon"
 puts "Created #{Type.count} Types"
 puts "Created #{PokemonType.count} Pokemon Types"
+puts "Created #{Pokedex.count} Pokedexes"
+puts "Created #{PokedexEntry.count} Pokedex Entries"
