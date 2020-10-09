@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_030001) do
+ActiveRecord::Schema.define(version: 2020_10_09_143310) do
 
   create_table "generations", force: :cascade do |t|
     t.string "name"
@@ -23,10 +23,10 @@ ActiveRecord::Schema.define(version: 2020_10_06_030001) do
     t.integer "pokedexnumber"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "pokemon_species_id", null: false
-    t.integer "pokedexes_id", null: false
-    t.index ["pokedexes_id"], name: "index_pokedex_entries_on_pokedexes_id"
-    t.index ["pokemon_species_id"], name: "index_pokedex_entries_on_pokemon_species_id"
+    t.integer "pokedex_id", null: false
+    t.integer "pokemon_specy_id", null: false
+    t.index ["pokedex_id"], name: "index_pokedex_entries_on_pokedex_id"
+    t.index ["pokemon_specy_id"], name: "index_pokedex_entries_on_pokemon_specy_id"
   end
 
   create_table "pokedexes", force: :cascade do |t|
@@ -68,8 +68,8 @@ ActiveRecord::Schema.define(version: 2020_10_06_030001) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "pokedex_entries", "pokedexes", column: "pokedexes_id"
-  add_foreign_key "pokedex_entries", "pokemon_species", column: "pokemon_species_id"
+  add_foreign_key "pokedex_entries", "pokedexes"
+  add_foreign_key "pokedex_entries", "pokemon_species"
   add_foreign_key "pokemon_species", "generations"
   add_foreign_key "pokemon_types", "pokemons"
   add_foreign_key "pokemon_types", "types"
