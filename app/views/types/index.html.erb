@@ -1,2 +1,17 @@
-<h1>Types#index</h1>
-<p>Find me in app/views/types/index.html.erb</p>
+<div class="jumbotron">
+  <h1 class="display-4">All Types</h1>
+  <p class="lead">This page will display all types in the PokeApi</p>
+</div>
+<div class="row">
+  <% @types.each do |type| %>
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <!--<img src="..." class="card-img-top" alt="...">-->
+        <div class="card-body">
+          <h5 class="card-title"><%= type.name %></h5>
+          <%= link_to "Show More", type_path(type.id), {:class=>"btn btn-primary"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

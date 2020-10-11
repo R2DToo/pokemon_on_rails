@@ -1,2 +1,18 @@
-<h1>Types#show</h1>
-<p>Find me in app/views/types/show.html.erb</p>
+<h2>Type: <%= @type.name %></h1>
+<h2>Type ID: <%= @type.id %></h2>
+<% if @type.pokemons.count > 0 %>
+  <p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+      List <%= @type.pokemons.count %> Pokemon with the <%= @type.name %> type
+    </a>
+  </p>
+  <div class="collapse" id="collapseExample">
+    <ul class="list-group">
+      <% @type.pokemons.each do |pokemon| %>
+        <li class="list-group-item">
+          <a href="#"><%= pokemon.name %></a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
