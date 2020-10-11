@@ -1,2 +1,17 @@
-<h1>Pokemons#index</h1>
-<p>Find me in app/views/pokemons/index.html.erb</p>
+<div class="jumbotron">
+  <h1 class="display-4">All Pokemon</h1>
+  <p class="lead">This page will display all Pokemon in the PokeApi</p>
+</div>
+<div class="row">
+  <% @pokemons.each do |pokemon| %>
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <!--<img src="..." class="card-img-top" alt="...">-->
+        <div class="card-body">
+          <h5 class="card-title"><%= pokemon.name %></h5>
+          <%= link_to "Show More", pokemon_path(pokemon.id), {:class=>"btn btn-primary"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

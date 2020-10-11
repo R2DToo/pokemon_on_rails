@@ -1,2 +1,11 @@
-<h1>Pokemons#show</h1>
-<p>Find me in app/views/pokemons/show.html.erb</p>
+<h2>Name: <%= @pokemon.name %></h2>
+<h2>Height: <%= @pokemon.height %> decimetres</h2>
+<h2>Weight: <%= @pokemon.weight %> hectograms</h2>
+<h2>
+  Type:
+  <% @pokemon.types.each do |type| %>
+    <%= link_to type.name, type_path(type.id) %>
+  <% end %>
+</h2>
+<!--<h2>Type: <%= @pokemon.types.collect(&:name).join(', ') %></h2>-->
+<h2>Species ID: <%= link_to @pokemon.pokemon_specy_id, "#" %>
