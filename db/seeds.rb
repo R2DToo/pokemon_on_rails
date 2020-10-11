@@ -17,7 +17,7 @@ all_generations = PokeApi.get(:generation)
 all_generations.count.times do |i|
   i += 1
   api_generation = PokeApi.get(generation: i)
-  new_generation = Generation.create(id: i, name: api_generation.name, region: api_generation.main_region.name)
+  new_generation = Generation.create(id: i, name: api_generation.name.capitalize, region: api_generation.main_region.name.capitalize)
   api_generation.pokemon_species.each do |species|
     new_species = new_generation.pokemon_species.create(id: species.url[42..-2])
   end
@@ -34,7 +34,7 @@ total_pages.times do
   pokemon_page.results.each do |basic_pokemon|
     pokemon_id = basic_pokemon.url[34..-2]
     api_pokemon = PokeApi.get(pokemon: pokemon_id)
-    new_pokemon = Pokemon.create(id: api_pokemon.id, name: api_pokemon.name, height: api_pokemon.height, weight: api_pokemon.weight, pokemon_specy_id: api_pokemon.species.url[42..-2])
+    new_pokemon = Pokemon.create(id: api_pokemon.id, name: api_pokemon.name.capitalize, height: api_pokemon.height, weight: api_pokemon.weight, pokemon_specy_id: api_pokemon.species.url[42..-2])
   end
   offset += 50
 end
@@ -43,7 +43,7 @@ pokemon_type_id = 0
 
 all_types.results.each do |type|
   type_id = type.url[31..-2]
-  new_type = Type.create(id: type_id, name: type.name)
+  new_type = Type.create(id: type_id, name: type.name.capitalize)
   pokemon_in_type = PokeApi.get(type: type_id)
   pokemon_in_type.pokemon.each do |pokemon|
     pokemon_id = pokemon.pokemon.url[34..-2]
@@ -62,7 +62,7 @@ total_pages.times do
   pokedex_page.results.each do |pokedex|
     pokedex_id = pokedex.url[34..-2]
     api_pokedex = PokeApi.get(pokedex: pokedex_id)
-    new_pokedex = Pokedex.create(id: api_pokedex.id, name: api_pokedex.name, region: api_pokedex.region)
+    new_pokedex = Pokedex.create(id: api_pokedex.id, name: api_pokedex.name.capitalize, region: api_pokedex.region.capitalize)
     api_pokedex.pokemon_entries.each do |entry|
       new_pokedex_entry = new_pokedex.pokedex_entries.create(pokedexnumber: entry.entry_number, pokemon_specy_id: entry.pokemon_species.url[42..-2])
     end
