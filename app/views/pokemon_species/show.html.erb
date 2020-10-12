@@ -1,2 +1,16 @@
-<h1>PokemonSpecies#show</h1>
-<p>Find me in app/views/pokemon_species/show.html.erb</p>
+<h2>Species Name: <%= @pokemon_specy.name %></h1>
+<h2>Generation ID: <%= @pokemon_specy.generation_id %></h2>
+<h2>Variations:</h2>
+<div class="row">
+  <% @pokemon_specy.pokemons.each do |pokemon_variety| %>
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <!--<img src="..." class="card-img-top" alt="...">-->
+        <div class="card-body">
+          <h5 class="card-title"><%= pokemon_variety.name %></h5>
+          <%= link_to "Show More", pokemon_path(pokemon_variety.id), {:class=>"btn btn-primary"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
