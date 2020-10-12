@@ -1,2 +1,23 @@
-<h1>Generations#show</h1>
-<p>Find me in app/views/generations/show.html.erb</p>
+<h2>Name: <%= @generation.name %></h1>
+<h2>Region: <%= @generation.region %></h2>
+<h2>Click below to see which pokemon species were released in this generation</h2>
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Show
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <div class="row">
+    <% @generation.pokemon_species.each do |pokemon_specy| %>
+      <div class="col">
+        <div class="card" style="width: 15rem;">
+          <!--<img src="..." class="card-img-top" alt="...">-->
+          <div class="card-body">
+            <h5 class="card-title"><%= pokemon_specy.name %></h5>
+            <%= link_to "Show More", pokemon_specy_path(pokemon_specy.id), {:class=>"btn btn-primary"} %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

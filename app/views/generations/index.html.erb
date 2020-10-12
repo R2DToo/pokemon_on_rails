@@ -1,2 +1,17 @@
-<h1>Generations#index</h1>
-<p>Find me in app/views/generations/index.html.erb</p>
+<div class="jumbotron">
+  <h1 class="display-4">All Generations</h1>
+  <p class="lead">This page will display all generations in the PokeApi</p>
+</div>
+<div class="row">
+  <% @generations.each do |generation| %>
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <!--<img src="..." class="card-img-top" alt="...">-->
+        <div class="card-body">
+          <h5 class="card-title"><%= generation.name %></h5>
+          <%= link_to "Show More", generation_path(generation.id), {:class=>"btn btn-primary"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
