@@ -45,6 +45,8 @@ all_types.results.each do |type|
   type_id = type.url[31..-2]
   new_type = Type.create(id: type_id, name: type.name.capitalize)
   pokemon_in_type = PokeApi.get(type: type_id)
+  next unless pokemon_in_type.pokemon.any?
+
   pokemon_in_type.pokemon.each do |pokemon|
     pokemon_id = pokemon.pokemon.url[34..-2]
     pokemon_type_id += 1
@@ -62,7 +64,12 @@ total_pages.times do
   pokedex_page.results.each do |pokedex|
     pokedex_id = pokedex.url[34..-2]
     api_pokedex = PokeApi.get(pokedex: pokedex_id)
-    new_pokedex = Pokedex.create(id: api_pokedex.id, name: api_pokedex.name.capitalize, region: api_pokedex.region.capitalize)
+    pokedex_region = if api_pokedex.region
+                       api_pokedex.region.name.capitalize
+                     else
+                       "Not Specified"
+                     end
+    new_pokedex = Pokedex.create(id: api_pokedex.id, name: api_pokedex.name.capitalize, region: pokedex_region)
     api_pokedex.pokemon_entries.each do |entry|
       new_pokedex_entry = new_pokedex.pokedex_entries.create(pokedexnumber: entry.entry_number, pokemon_specy_id: entry.pokemon_species.url[42..-2])
     end
