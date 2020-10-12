@@ -19,9 +19,12 @@ all_generations.count.times do |i|
   api_generation = PokeApi.get(generation: i)
   new_generation = Generation.create(id: i, name: api_generation.name.capitalize, region: api_generation.main_region.name.capitalize)
   api_generation.pokemon_species.each do |species|
-    new_species = new_generation.pokemon_species.create(id: species.url[42..-2])
+    new_species = new_generation.pokemon_species.create(id: species.url[42..-2], name: species.name.capitalize)
   end
 end
+
+puts "Created #{Generation.count} Generations"
+puts "Created #{PokemonSpecy.count} Pokemon Species"
 
 all_pokemon = PokeApi.get(:pokemon)
 
@@ -38,6 +41,9 @@ total_pages.times do
   end
   offset += 50
 end
+
+puts "Created #{Pokemon.count} Pokemon"
+
 all_types = PokeApi.get(:type)
 pokemon_type_id = 0
 
@@ -53,6 +59,10 @@ all_types.results.each do |type|
     new_pokemon_type = new_type.pokemon_types.create(id: pokemon_type_id, pokemon_id: pokemon_id)
   end
 end
+
+puts "Created #{Type.count} Types"
+puts "Created #{PokemonType.count} Pokemon Types"
+
 all_pokedexes = PokeApi.get(:pokedex)
 
 offset = 0
@@ -77,10 +87,5 @@ total_pages.times do
   offset += 8
 end
 
-puts "Created #{Generation.count} Generations"
-puts "Created #{PokemonSpecy.count} Pokemon Species"
-puts "Created #{Pokemon.count} Pokemon"
-puts "Created #{Type.count} Types"
-puts "Created #{PokemonType.count} Pokemon Types"
 puts "Created #{Pokedex.count} Pokedexes"
 puts "Created #{PokedexEntry.count} Pokedex Entries"
