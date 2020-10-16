@@ -1,2 +1,17 @@
-<h1>Pokedexes#index</h1>
-<p>Find me in app/views/pokedexes/index.html.erb</p>
+<div class="jumbotron">
+  <h1 class="display-4">All Pokedexes</h1>
+  <p class="lead">This page will display all Pokedexes in the PokeApi</p>
+</div>
+<div class="row">
+  <% @pokedexes.each do |pokedex| %>
+    <div class="col">
+      <div class="card" style="width: 15rem;">
+        <!--<img src="..." class="card-img-top" alt="...">-->
+        <div class="card-body">
+          <h5 class="card-title"><%= pokedex.name %></h5>
+          <%= link_to "Show More", pokedex_path(pokedex.id), {:class=>"btn btn-primary"} %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

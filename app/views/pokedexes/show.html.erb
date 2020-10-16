@@ -1,2 +1,36 @@
-<h1>Pokedexes#show</h1>
-<p>Find me in app/views/pokedexes/show.html.erb</p>
+<h2>Name: <%= @pokedex.name %></h2>
+<h2>Region: <%= @pokedex.region %></h2>
+<h2>Click below to see the pokemon in this Pokedex</h2>
+<p>
+  <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Show
+  </a>
+</p>
+<div class="collapse" id="collapseExample">
+  <table class="table">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">Pokedex Number</th>
+      <th scope="col">Name</th>
+      <th scope="col">Types</th>
+      <th scope="col">Species ID</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pokedex.pokedex_entries.each do |entry| %>
+      <tr>
+        <th scope="row"><%= entry.pokedexnumber %></th>
+        <td><%= link_to entry.pokemon_specy.name, entry.pokemon_specy %></td>
+        <td>
+          <% pokemon_in_entry = entry.pokemon_specy.pokemons.first %>
+          <% types = pokemon_in_entry.types.all %>
+          <% types.each do |type| %>
+            <%= link_to type.name, type_path(type.id) %>
+          <% end %>
+        </td>
+        <td><%= entry.pokemon_specy_id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
