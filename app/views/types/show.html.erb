@@ -1,4 +1,4 @@
-<%= image_tag @type.name + ".png" %>
+<%= image_tag @type.name + ".png", {:alt=>@type.name + " type picture"} %>
 <h2>Type: <%= @type.name %></h2>
 <h2>Type ID: <%= @type.id %></h2>
 <% if @type.pokemons.count > 0 %>

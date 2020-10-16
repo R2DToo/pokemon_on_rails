@@ -1,5 +1,11 @@
 <h2>Species Name: <%= @pokemon_specy.name %></h2>
-<h2>Generation ID: <%= link_to @pokemon_specy.generation_id, generation_path(@pokemon_specy.generation_id) %></h2>
+<h2>Introduced in Generation: <%= link_to @pokemon_specy.generation_id, generation_path(@pokemon_specy.generation_id) %></h2>
+<h2>
+  Found in these Pokedexes:
+  <% @pokemon_specy.pokedexes.each do |pokedex| %>
+    <%= link_to pokedex.name, pokedex_path(pokedex.id) %>,
+  <% end %>
+</h2>
 <h2>Variations:</h2>
 <div class="row">
   <% @pokemon_specy.pokemons.each do |pokemon_variety| %>

@@ -4,8 +4,7 @@
 <h2>
   Type:
   <% @pokemon.types.each do |type| %>
-    <%= link_to type.name, type_path(type.id) %>
+    <%= link_to type.name, type_path(type.id).html_safe %>
   <% end %>
 </h2>
-<!--<h2>Type: <%= @pokemon.types.collect(&:name).join(', ') %></h2>-->
-<h2>Species ID: <%= link_to @pokemon.pokemon_specy_id, pokemon_specy_path(@pokemon.pokemon_specy_id) %>
+<h2>Base Species Name: <%= link_to @pokemon.pokemon_specy.name, pokemon_specy_path(@pokemon.pokemon_specy_id) %></h2>
