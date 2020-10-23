@@ -2,6 +2,7 @@
   <h1 class="display-4">All Generations</h1>
   <p class="lead">This page will display all generations in the PokeApi</p>
 </div>
+<%= paginate @generations %>
 <div class="row">
   <% @generations.each do |generation| %>
     <div class="col">

@@ -2,6 +2,7 @@
   <h1 class="display-4">All Pokemon Species</h1>
   <p class="lead">This page will display all Pokemon species in the PokeApi</p>
 </div>
+<%= paginate @pokemon_species %>
 <div class="row">
   <% @pokemon_species.each do |pokemon_specy| %>
     <div class="col">

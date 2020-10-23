@@ -1,6 +1,6 @@
 class TypesController < ApplicationController
   def index
-    @types = Type.all.order("id")
+    @types = Type.order("id").page(params[:page])
   end
 
   def show

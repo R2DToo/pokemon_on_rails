@@ -2,6 +2,7 @@
   <h1 class="display-4">All Types</h1>
   <p class="lead">This page will display all types in the PokeApi</p>
 </div>
+<%= paginate @types %>
 <div class="row">
   <% @types.each do |type| %>
     <div class="col">

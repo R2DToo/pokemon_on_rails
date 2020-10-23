@@ -1,6 +1,6 @@
 class GenerationsController < ApplicationController
   def index
-    @generations = Generation.order("id")
+    @generations = Generation.order("id").page(params[:page])
   end
 
   def show
