@@ -1,0 +1,12 @@
+<div class="jumbotron">
+  <h1 class="display-4">About PokemonOnRails</h1>
+</div>
+<h2>The website has a few categories to explore</h2>
+<ul class="list-group">
+  <%= link_to "Generations will show which Pokemon species were released at that time", generations_path, {:class=>"list-group-item list-group-item-action list-group-item-primary"} %>
+  <%= link_to "Pokemon species is the base Pokemon that may have variations", pokemon_species_path, {:class=>"list-group-item list-group-item-action list-group-item-success"} %>
+  <%= link_to "Pokemon will show every Pokemon including variations", pokemons_path, {:class=>"list-group-item list-group-item-action list-group-item-danger"} %>
+  <%= link_to "Pokedexes will show which Pokemon are in that pokedex", pokedexes_path, {:class=>"list-group-item list-group-item-action list-group-item-warning"} %>
+  <%= link_to "Types will show all Pokemon with that type", types_path, {:class=>"list-group-item list-group-item-action list-group-item-info"} %>
+</ul>
+<p>This website is powered by the PokeAPI. <a href="https://pokeapi.co/">https://pokeapi.co/</a></p>
