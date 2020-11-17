@@ -1,6 +1,7 @@
 class PokemonSpeciesController < ApplicationController
   def index
-    @pokemon_species = PokemonSpecy.order("id").page(params[:page])
+    @search = PokemonSpecy.search(params[:q])
+    @pokemon_species = @search.result.order("id").page(params[:page])
   end
 
   def show

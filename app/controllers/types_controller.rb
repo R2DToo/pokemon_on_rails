@@ -1,6 +1,7 @@
 class TypesController < ApplicationController
   def index
-    @types = Type.order("id").page(params[:page])
+    @search = Type.search(params[:q])
+    @types = @search.result.order("id").page(params[:page])
   end
 
   def show

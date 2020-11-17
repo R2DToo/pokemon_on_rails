@@ -55,3 +55,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem 'poke-api-v2'
 gem 'kaminari'
+gem 'ransack', github: 'activerecord-hackery/ransack'

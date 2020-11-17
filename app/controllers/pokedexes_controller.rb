@@ -1,6 +1,7 @@
 class PokedexesController < ApplicationController
   def index
-    @pokedexes = Pokedex.order("id").page(params[:page])
+    @search = Pokedex.search(params[:q])
+    @pokedexes = @search.result.order("id").page(params[:page])
   end
 
   def show

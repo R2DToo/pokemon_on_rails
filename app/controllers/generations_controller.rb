@@ -1,6 +1,7 @@
 class GenerationsController < ApplicationController
   def index
-    @generations = Generation.order("id").page(params[:page])
+    @search = Generation.search(params[:q])
+    @generations = @search.result.order("id").page(params[:page])
   end
 
   def show
